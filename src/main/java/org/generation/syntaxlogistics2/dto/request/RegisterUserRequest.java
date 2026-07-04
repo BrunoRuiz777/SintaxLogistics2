@@ -37,5 +37,4 @@ public record RegisterUserRequest(
         String password
 
 ) {
-
 }

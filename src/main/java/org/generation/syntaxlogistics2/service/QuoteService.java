@@ -1,5 +1,6 @@
 package org.generation.syntaxlogistics2.service;
 
+import org.generation.syntaxlogistics2.dto.request.UpdateQuoteRequest;
 import org.generation.syntaxlogistics2.model.Quote;
 import org.generation.syntaxlogistics2.model.ServiceCategory;
 import org.generation.syntaxlogistics2.model.Users;
@@ -91,5 +92,57 @@ public class QuoteService {
 
         // devuelve todas las cotizaciones que NO han sido aceptadas
         return quoteRepository.findByIsAccepted(false);
+    }
+
+    // metodo obtener todas las cotizaciones
+    public List<Quote> findAll() {
+
+        // devuelve todas las cotizaciones sin filtro
+        return quoteRepository.findAll();
+    }
+
+    // metodo obtener una cotización por su ID
+    public Quote findById(Long id) {
+
+        // busca la cotización, si no existe lanza error controlado
+        return quoteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cotización no encontrada con ID: " + id));
+    }
+
+    // metodo actualizar una cotización existente
+    public Quote updateQuote(Long id, UpdateQuoteRequest request) {
+
+        // Buscar la cotización que se quiere actualizar
+        Quote quote = findById(id);
+
+        // Buscar la categoría de servicio según el nuevo tipo (por si cambió)
+        ServiceCategory category = serviceCategoryRepository
+                .findByServiceType(request.serviceType())
+                .orElseThrow(() -> new RuntimeException("Categoría de servicio no configurada"));
+
+        // Actualizar los campos editables
+        quote.setOriginAddress(request.originAddress());
+        quote.setDestinationAddress(request.destinationAddress());
+        quote.setWeight(request.weight());
+        quote.setLength(request.length());
+        quote.setWidth(request.width());
+        quote.setHeight(request.height());
+        quote.setServiceType(request.serviceType());
+
+        // Recalcular el precio porque el peso o el tipo de servicio pudieron cambiar
+        quote.setBasePrice(category.getBasePrice());
+        double total = category.getBasePrice() + (request.weight() * 10);
+        quote.setTotalPrice(total);
+
+        // Guardar los cambios
+        return quoteRepository.save(quote);
+    }
+
+    // metodo eliminar una cotización
+    public void deleteQuote(Long id) {
+
+        // Verificar que exista antes de borrar (si no existe, lanza error controlado)
+        Quote quote = findById(id);
+        quoteRepository.delete(quote);
     }
 }
