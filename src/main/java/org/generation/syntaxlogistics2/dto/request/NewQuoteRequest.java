@@ -1,4 +1,38 @@
 package org.generation.syntaxlogistics2.dto.request;
 
-public record NewQuoteRequest() {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.generation.syntaxlogistics2.enums.ServiceType;
+
+public record NewQuoteRequest(
+
+        @NotNull(message = "El usuario es obligatorio")
+        Long userId,
+
+        @NotBlank(message = "El origen es obligatorio para cotizar")
+        String originAddress,
+
+        @NotBlank(message = "El destino es obligatorio para cotizar")
+        String destinationAddress,
+
+        @NotNull(message = "El peso del paquete es obligatorio")
+        @Positive(message = "El peso debe ser mayor a cero")
+        Double weight,
+
+        @NotNull(message = "El largo del paquete es obligatorio")
+        @Positive(message = "El largo debe ser mayor a cero")
+        Double length,
+
+        @NotNull(message = "El ancho del paquete es obligatorio")
+        @Positive(message = "El ancho debe ser mayor a cero")
+        Double width,
+
+        @NotNull(message = "La altura es obligatoria")
+        @Positive(message = "La altura debe ser mayor a cero")
+        Double height,
+
+        @NotNull(message = "El tipo de servicio es obligatorio")
+        ServiceType serviceType
+) {
 }

@@ -4,6 +4,11 @@ import org.generation.syntaxlogistics2.model.Quote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
+    // Spring Boot construirá el SQL automáticamente para estas dos búsquedas
+    List<Quote> findByUserId(Long userId);
+    List<Quote> findByIsAccepted(Boolean isAccepted);
 }

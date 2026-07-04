@@ -22,7 +22,7 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 10)
+    @Column(unique = true, nullable = false, length = 15)
     private String trackingNumber;
 
     @Column(nullable = false, length = 200)
@@ -42,6 +42,15 @@ public class Shipment {
 
     @Column(nullable = false) //la altura es obligatorio
     private Double height;
+
+    @Column(nullable = false, length = 150)
+    private String recipientName;
+
+    @Column(nullable = false, length = 10)
+    private String recipientPhone;
+
+    @Column(nullable = false, length = 300)
+    private String packageDescription;
 
     // Fecha en la que se generó la guía
     @Column(nullable = false, updatable = false)

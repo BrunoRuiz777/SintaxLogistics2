@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.generation.syntaxlogistics2.enums.UserRole;
+import org.generation.syntaxlogistics2.enums.UserRol;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Users {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole rol;
+    private UserRol rol;
 
     // Un usuario puede tener muchos envíos o cotizaciones.
     // @OneToMany indica una relación de uno a muchos.

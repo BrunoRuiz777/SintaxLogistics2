@@ -1,6 +1,6 @@
 package org.generation.syntaxlogistics2.enums;
 
-public enum UserRole {
+public enum UserRol {
     CLIENT,
     COURIER,
     ADMIN

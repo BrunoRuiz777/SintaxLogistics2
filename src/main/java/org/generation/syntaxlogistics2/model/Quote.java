@@ -52,6 +52,23 @@ public class Quote {
     @Column(nullable = false)
     private Boolean isAccepted = false;
 
+    // Direcciones de la cotización
+    @Column(nullable = false)
+    private String originAddress;
+
+    @Column(nullable = false)
+    private String destinationAddress;
+
+    // Dimensiones del paquete
+    @Column(nullable = false)
+    private Double length;
+
+    @Column(nullable = false)
+    private Double width;
+
+    @Column(nullable = false)
+    private Double height;
+
     // si llevaba xd jajaja
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
