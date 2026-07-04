@@ -1,4 +1,4 @@
 package org.generation.syntaxlogistics2.service;
 
-public class UsuarioService {
+public class ShipmentService {
 }
