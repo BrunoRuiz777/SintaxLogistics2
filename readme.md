@@ -26,3 +26,7 @@ Para levantar este proyecto en tu entorno local, asegúrate de tener instalado:
 1. **Clona el repositorio:**
    ```bash
    git clone [https://github.com/TU-USUARIO/syntax-logistics-backend.git](https://github.com/TU-USUARIO/syntax-logistics-backend.git)
+
+1. **Cambiar username y password:**
+*  Mantener en el repositorio un application.properties con variables de entorno, cada integrante debe reemplazar esos valores por los
+*  de su entorno local.
