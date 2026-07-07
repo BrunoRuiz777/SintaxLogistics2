@@ -5,6 +5,8 @@ import org.generation.syntaxlogistics2.dto.response.UserResponse;
 import org.generation.syntaxlogistics2.model.Users;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserMapper {
 
@@ -14,13 +16,9 @@ public class UserMapper {
         user.setName(request.name());
         user.setLastName(request.lastName());
         user.setEmail(request.email());
-
-        // CORREGIDO: Usamos setPhoneNumber en lugar de setPhone
         user.setPhoneNumber(request.phone());
         user.setPassword(request.password());
 
-        // Nota: No necesitamos agregar 'registrationDate' ni 'rol' aquí,
-        // eso lo asignaremos en el UserService al registrarlo.
         return user;
     }
 
@@ -31,10 +29,15 @@ public class UserMapper {
                 user.getName(),
                 user.getLastName(),
                 user.getEmail(),
-
-                // CORREGIDO: Usamos getPhoneNumber() y getRol()
                 user.getPhoneNumber(),
                 user.getRol().name()
         );
+    }
+
+    // Convierte una lista de entidades a una lista de responses (para el GET /api/users)
+    public List<UserResponse> toResponseList(List<Users> users) {
+        return users.stream()
+                .map(this::toResponse)
+                .toList();
     }
 }
