@@ -1,0 +1,245 @@
+/* ═══════════════════════════════════════════
+   cotizar.css — usa /src/css/variables.css para colores globales
+   Variables locales solo para lo específico de esta página
+═══════════════════════════════════════════ */
+
+/* Espacio para navbar flotante fija */
+#vista-formulario {
+    padding-top: 48px;
+    padding-bottom: 60px;
+}
+
+body {
+    background-color: var(--gris-suave) !important;
+}
+
+/* ==========================================
+   1. TABS DE CATEGORÍA
+   ========================================== */
+.nav-pills .nav-link {
+    color: var(--gris-texto) !important; /* Sustituido #1f2937 */
+}
+
+.caja-categoria {
+    background-color: var(--blanco) !important; /* Sustituido #ffffff */
+    border: 1px solid var(--gris-borde) !important;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+}
+
+.caja-categoria .icono-check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: none;
+    color: var(--verde-medio);
+    font-size: 1.2rem;
+}
+
+/* EL ESTADO ACTIVO (La pestaña seleccionada) */
+.nav-pills .nav-link.active.caja-categoria {
+    background-color: var(--verde-ultra) !important;
+    border: 1.5px solid var(--verde-medio) !important;
+}
+
+.nav-pills .nav-link.active.caja-categoria .icono-check { 
+    display: block; 
+}
+
+/* ==========================================
+   2. CAJAS DEL FORMULARIO
+   ========================================== */
+.caja-seccion {
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: var(--blanco); /* Sustituido #ffffff */
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================
+   3. TÍTULOS Y CÍRCULOS VERDES
+   ========================================== */
+.titulo-seccion { 
+    color: var(--verde-titulo); 
+    font-size: 1.1rem; 
+    font-weight: 700; 
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.2rem; 
+}
+
+.circulo-icono {
+    background-color: var(--verde-ultra); 
+    color: var(--verde-medio);  
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.subtitulo-seccion { 
+    color: var(--gris-texto); 
+    font-size: 0.85rem; 
+    margin-bottom: 1.5rem; 
+    margin-left: 45px; 
+}
+
+/* ==========================================
+   4. LUGARES DE CAPTURA (INPUTS)
+   ========================================== */
+.form-label { 
+    color: var(--gris-texto); 
+    font-size: 0.85rem;
+    font-weight: 500; 
+    margin-bottom: 0.4rem; 
+}
+
+.form-control {
+    background-color: var(--blanco) !important; 
+    border: 1px solid var(--gris-borde) !important;   
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    color: var(--gris-texto); /* Sustituido #1f2937 */
+    transition: all 0.2s ease;
+}
+
+/* Cuando das clic para escribir */
+.form-control:focus {
+    background-color: var(--blanco) !important; /* Sustituido #ffffff */
+    border-color: var(--verde-principal) !important; /* Corregido variable inexistente */
+    box-shadow: 0 0 0 3px var(--hover-verde) !important; /* Sustituido rgba duro */
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--gris-texto-local); /* Sustituido #9ca3af */
+}
+
+/* ==========================================
+   5. BOTÓN PRINCIPAL
+   ========================================== */
+.btn-solicitar {
+    background-color: var(--verde-principal) !important;
+    color: var(--blanco) !important;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-solicitar:hover { background-color: var(--verde-titulo) !important; } /* Sustituido #14532d */
+.btn-solicitar:active { transform: scale(0.98); }
+
+/* Alerta amarilla de Compartido */
+.text-warning {
+    color: var(--naranja-badge) !important; /* Sustituido #d97706 */
+}
+
+/* ==========================================
+   6. VALIDACIONES DE ERRORES (BORDES ROJOS)
+   ========================================== */
+/* Borde rojo para campos vacíos o incorrectos al enviar */
+.was-validated .form-control:invalid {
+    border-color: #dc3545 !important;
+    padding-right: calc(1.5em + .75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+/* Sombra roja cuando el usuario da clic en un campo con error */
+.was-validated .form-control:invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Borde verde opcional para los campos que sí están correctos */
+.was-validated .form-control:valid {
+    border-color: var(--verde-principal) !important;
+}
+
+/* ==========================================================================
+   BREAKPOINT 375px — Móvil pequeño
+   ========================================================================== */
+@media (max-width: 375px) {
+  #vista-formulario {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #categorias-envio {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .caja-categoria {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .caja-seccion {
+    padding: 1rem;
+  }
+
+  .titulo-seccion {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 768px — Tablet
+   ========================================================================== */
+@media (max-width: 768px) {
+  #categorias-envio {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .caja-categoria {
+    flex: 0 0 calc(50% - 5px);
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 1280px+ — Desktop grande
+   ========================================================================== */
+@media (min-width: 1280px) {
+  #vista-formulario {
+    max-width: 1100px !important;
+  }
+}
+/* =====================================================
+   HISTORIAL DE COTIZACIONES
+===================================================== */
+#seccion-historial {
+  max-width: 860px;
+}
+
+.historial-card {
+  border-radius: 12px !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.historial-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10) !important;
+}
+
+.historial-icono {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--bs-light, var(--blanco)) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

@@ -41,7 +41,14 @@ public class SecurityConfig {
                                 "/api/users/**",
                                 "/api/quotes/**",
                                 "/api/shipments/**",
-                                "/error"
+                                "/error",
+                                "/",
+                                "/index.html",
+                                "/favicon.svg",
+                                "/icons.svg",
+                                "/assets/**",
+                                "/src/**",
+                                "/public/**"
                         ).permitAll()
 
                         // Permitir peticiones OPTIONS
