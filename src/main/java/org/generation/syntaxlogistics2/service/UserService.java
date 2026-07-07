@@ -5,6 +5,7 @@ import org.generation.syntaxlogistics2.enums.UserRol;
 import org.generation.syntaxlogistics2.model.Users;
 import org.generation.syntaxlogistics2.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +16,17 @@ public class UserService {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // crear usuario
     public Users createUser(Users user) {
         if (usersRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya está registrado");
         }
 
+        // Encriptamos la contraseña antes de guardarla — nunca en texto plano
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRol(UserRol.CLIENT);
         return usersRepository.save(user);
     }
@@ -60,7 +66,7 @@ public class UserService {
 
         // Password opcional: solo se actualiza si viene con contenido
         if (request.password() != null && !request.password().isBlank()) {
-            user.setPassword(request.password());
+            user.setPassword(passwordEncoder.encode(request.password()));
         }
 
         return usersRepository.save(user);

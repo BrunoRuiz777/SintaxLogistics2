@@ -15,17 +15,18 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Orígenes permitidos: el servidor de desarrollo de Vite
-        // Agrega aquí el dominio real cuando despliegues el front en producción
+        // Con el front servido desde el propio Spring Boot (localhost:8080) esto
+        // ya no es estrictamente necesario (mismo origen), pero lo dejamos por si
+        // alguien del equipo sigue usando "npm run dev" (Vite en localhost:5173)
+        // en paralelo para desarrollo rápido del front.
         configuration.setAllowedOrigins(List.of(
+                "http://localhost:8080",
                 "http://localhost:5173",
                 "http://127.0.0.1:5173"
         ));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-
-        // Necesario si en algún momento envías cookies o credenciales
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
