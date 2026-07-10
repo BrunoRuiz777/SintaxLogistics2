@@ -12,11 +12,9 @@ public class ShipmentMapper {
     public Shipment toEntity(CreateShipmentRequest request) {
         Shipment shipment = new Shipment();
 
-        // Datos básicos
         shipment.setOriginAddress(request.originAddress());
         shipment.setDestinationAddress(request.destinationAddress());
 
-        // Datos de remitente y destinatario
         shipment.setSenderName(request.senderName());
         shipment.setSenderPhone(request.senderPhone());
         shipment.setRecipientName(request.recipientName());
@@ -24,9 +22,7 @@ public class ShipmentMapper {
         shipment.setReceiverName(request.receiverName());
         shipment.setReceiverPhone(request.receiverPhone());
 
-        // Datos del paquete
         shipment.setPackageDescription(request.packageDescription());
-        shipment.setContentDescription(request.packageDescription()); // Mapeamos igual al campo de la entidad
         shipment.setWeight(request.weight());
         shipment.setLength(request.length());
         shipment.setWidth(request.width());

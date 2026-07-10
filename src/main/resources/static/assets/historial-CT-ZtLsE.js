@@ -1,0 +1,59 @@
+import{t as e}from"./modulepreload-polyfill-CwuZNuQA.js";/* empty css               *//* empty css               */import{n as t,t as n}from"./servicioUsuario-BDO4U0RE.js";e((()=>{t();var e={Express:5,Exclusivo:10,Extraordinario:10},r={Express:`EXPRESS`,Exclusivo:`EXCLUSIVE`,Extraordinario:`EXTRAORDINARY`},i={EXPRESS:`/src/assets/repart1.svg`,EXCLUSIVE:`/src/assets/repar3.svg`,EXTRAORDINARY:`/src/assets/repar4.svg`},a={CREATED:`Cotización generada — Pendiente de confirmación`,PICKED_UP:`Recolectado`,IN_TRANSIT:`En camino`,DELIVERED:`Entregado`,CANCELLED:`Cancelado`};document.addEventListener(`DOMContentLoaded`,()=>{s(),document.getElementById(`form-cotizar`).addEventListener(`submit`,m),document.getElementById(`tipoEnvio`).addEventListener(`change`,l),document.getElementById(`largo`).addEventListener(`input`,()=>d(`largo`,p(`largo`,`feedbackLargo`))),document.getElementById(`ancho`).addEventListener(`input`,()=>d(`ancho`,p(`ancho`,`feedbackAncho`))),document.getElementById(`alto`).addEventListener(`input`,()=>d(`alto`,p(`alto`,`feedbackAlto`))),document.getElementById(`peso`).addEventListener(`input`,()=>d(`peso`,u(document.getElementById(`tipoEnvio`).value,document.getElementById(`peso`).value))),document.getElementById(`cpOrigen`).addEventListener(`blur`,()=>{c(`cpOrigen`,`estadoOrigen`,`coloniaOrigen`)}),document.getElementById(`cpDestino`).addEventListener(`blur`,()=>{c(`cpDestino`,`estadoDestino`,`coloniaDestino`)}),document.getElementById(`modalCotizar`).addEventListener(`hidden.bs.modal`,()=>{document.getElementById(`contenedor-alertas`).innerHTML=``,f(),s()}),h()});function o(){let e=localStorage.getItem(`sesionActiva`);return e?JSON.parse(e):null}async function s(){let e=document.getElementById(`contenedor-historial`),t=o();if(!t||!t.id){e.innerHTML=`
+      <div class="col-12 text-center py-5">
+        <p class="fs-5 mensaje-vacio">Inicia sesión para ver tu historial.</p>
+      </div>
+    `;return}let n=[];try{let e=sessionStorage.getItem(`jwt_token`),r=await fetch(`/api/shipments/user/${t.id}`,{headers:e?{Authorization:`Bearer ${e}`}:{}});r.ok&&(n=await r.json())}catch(e){console.error(`No se pudo cargar el historial:`,e)}if(n.length===0){e.innerHTML=`
+      <div class="col-12 text-center py-5">
+        <p class="fs-5 mensaje-vacio">Aún no tienes servicios solicitados.</p>
+      </div>
+    `;return}e.innerHTML=``;let r=document.createElement(`div`);r.className=`col-12 px-4 px-md-5`,n.forEach((e,t)=>{let n=new Date(e.createdAt).toLocaleDateString(`es-MX`),o=`
+      <div class="row align-items-center py-4 mb-3 border-bottom text-center text-md-start fila-pedido">
+        <div class="col-12 col-md-2 mb-3 mb-md-0 d-flex justify-content-center">
+          <img src="${i[e.serviceType]||``}" alt="${e.serviceType}" class="img-fluid imagen-servicio">
+        </div>
+        <div class="col-12 col-md-6 mb-3 mb-md-0 text-secondary info-pedido">
+          <h3 class="h6 fw-bold text-dark mb-1 nombre-servicio">${e.serviceType}</h3>
+          <p class="mb-1">Paquete: ${e.weight} kg | Dimensiones: ${e.length}x${e.width}x${e.height} cm</p>
+          <p class="mb-1">Fecha: ${n}</p>
+          <p class="mb-1">Estatus: <span class="fw-bold text-dark">${a[e.status]||e.status}</span></p>
+          <p class="mb-0">No. de Guía:
+            <a href="#" class="text-dark fw-bold text-decoration-underline" onclick="copiarFolio(event, '${e.trackingNumber}')">
+              ${e.trackingNumber} (Clic para copiar)
+            </a>
+          </p>
+        </div>
+        <div class="col-12 col-md-4 d-flex flex-column flex-sm-row justify-content-md-end align-items-center gap-3">
+          <button class="btn px-4 text-white rounded-3 fw-medium boton-ver" onclick="verCotizacion(${t})">Ver</button>
+        </div>
+      </div>
+    `;r.innerHTML+=o}),e.appendChild(r),window._historialActual=n}async function c(e,t,n){let r=document.getElementById(e),i=document.getElementById(t),a=document.getElementById(n),o=r.value.trim();if(!/^\d{5}$/.test(o)){i.value=``,a.value=``;return}i.value=`Buscando...`,a.value=`Buscando...`;try{let e=await fetch(`https://api.zippopotam.us/mx/${o}`);if(!e.ok){i.value=``,a.value=`No encontrado`;return}let t=(await e.json()).places[0];i.value=t.state,a.value=t[`place name`]}catch(e){console.error(`No se pudo consultar el código postal:`,e),i.value=``,a.value=`Error al buscar`}}function l(){let t=document.getElementById(`tipoEnvio`).value,n=document.getElementById(`peso`),r=document.getElementById(`feedbackPeso`),i=e[t];i?(n.max=i,r.textContent=`El peso máximo para ${t} es de ${i} kg.`):(n.removeAttribute(`max`),r.textContent=`Ingresa un peso válido mayor a 0.`),n.value&&i&&Number(n.value)>i&&d(`peso`,!1);let a=t!==``;document.querySelectorAll(`#form-cotizar input, #form-cotizar textarea`).forEach(e=>{e.disabled=!a}),document.querySelector(`#form-cotizar button[type='submit']`).disabled=!a}function u(t,n){if(n===``||Number(n)<=0)return!1;let r=e[t];return!(r&&Number(n)>r)}function d(e,t){let n=document.getElementById(e);return t?(n.classList.remove(`is-invalid`),n.classList.add(`is-valid`)):(n.classList.remove(`is-valid`),n.classList.add(`is-invalid`)),t}function f(){document.querySelectorAll(`#form-cotizar .is-valid, #form-cotizar .is-invalid`).forEach(e=>e.classList.remove(`is-valid`,`is-invalid`)),document.getElementById(`form-cotizar`).classList.remove(`was-validated`)}function p(e,t){let n=document.getElementById(e),r=document.getElementById(t),i=parseFloat(n.value);return n.value.trim()===``?(r.textContent=`Este campo es requerido.`,!1):isNaN(i)||i<=0?(r.textContent=`Debe ser un número mayor a 0.`,!1):i>40?(r.textContent=`La medida debe ser menor a 40 cm.`,!1):!0}async function m(e){e.preventDefault();let t=document.getElementById(`tipoEnvio`).value,n=document.getElementById(`cpOrigen`).value.trim(),i=document.getElementById(`calleOrigen`).value.trim(),a=document.getElementById(`estadoOrigen`).value.trim(),c=document.getElementById(`coloniaOrigen`).value.trim(),l=document.getElementById(`cpDestino`).value.trim(),m=document.getElementById(`calleDestino`).value.trim(),h=document.getElementById(`estadoDestino`).value.trim(),g=document.getElementById(`coloniaDestino`).value.trim(),_=document.getElementById(`nombreRemitente`).value.trim(),v=document.getElementById(`nombreDestinatario`).value.trim(),y=document.getElementById(`telefonoRemitente`).value.trim(),b=document.getElementById(`telefonoDestinatario`).value.trim(),x=document.getElementById(`correoRemitente`).value.trim(),S=document.getElementById(`peso`).value,C=document.getElementById(`largo`).value,w=document.getElementById(`ancho`).value,T=document.getElementById(`alto`).value,E=document.getElementById(`descripcionContenido`).value.trim(),D=/^\d{5}$/,O=/^\d{10}$/,k=d(`tipoEnvio`,t!==``)&&d(`cpOrigen`,D.test(n))&&d(`calleOrigen`,i.length>=5)&&d(`cpDestino`,D.test(l))&&d(`calleDestino`,m.length>=5)&&d(`nombreRemitente`,_.length>=3)&&d(`nombreDestinatario`,v.length>=3)&&d(`telefonoRemitente`,O.test(y))&&d(`telefonoDestinatario`,O.test(b))&&d(`correoRemitente`,/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x))&&d(`peso`,u(t,S))&&d(`largo`,p(`largo`,`feedbackLargo`))&&d(`ancho`,p(`ancho`,`feedbackAncho`))&&d(`alto`,p(`alto`,`feedbackAlto`))&&d(`descripcionContenido`,E.length>=10),A=document.getElementById(`contenedor-alertas`);if(e.target.classList.add(`was-validated`),!k){A.innerHTML=`
+      <div class="alert alert-danger" role="alert">
+        Hay campos por corregir. Revisa los que están marcados en rojo.
+      </div>
+    `;return}let j=o();if(!j||!j.id){A.innerHTML=`
+      <div class="alert alert-warning" role="alert">
+        Debes iniciar sesión para generar un envío.
+      </div>
+    `;return}let M={senderId:j.id,originAddress:`${i}, ${c}, ${a}, CP ${n}`,destinationAddress:`${m}, ${g}, ${h}, CP ${l}`,senderName:_,senderPhone:y,recipientName:v,recipientPhone:b,receiverName:v,receiverPhone:b,packageDescription:E,weight:parseFloat(S),length:parseFloat(C),width:parseFloat(w),height:parseFloat(T),serviceType:r[t]},N=e.target.querySelector(`button[type="submit"]`),P=N.textContent;N.disabled=!0,N.textContent=`Generando...`;try{let t=sessionStorage.getItem(`jwt_token`),n=await fetch(`/api/shipments/${j.id}`,{method:`POST`,headers:{"Content-Type":`application/json`,...t?{Authorization:`Bearer ${t}`}:{}},body:JSON.stringify(M)});if(!n.ok){let e=await n.json().catch(()=>null);throw Error(e?.message||`Error del servidor (${n.status})`)}let r=await n.json();e.target.reset(),f();let i=bootstrap.Modal.getInstance(document.getElementById(`modalCotizar`));i&&i.hide(),A.innerHTML=`
+      <div class="alert alert-success" role="alert">
+        ¡Envío generado! Guía: ${r.trackingNumber}
+      </div>
+    `,s()}catch(e){console.error(`Error al crear el envío:`,e),A.innerHTML=`
+      <div class="alert alert-danger" role="alert">
+        No se pudo generar el envío: ${e.message}
+      </div>
+    `}finally{N.disabled=!1,N.textContent=P}}function h(){let e=document.getElementById(`form-login-movil`);e&&(e.addEventListener(`submit`,async t=>{t.preventDefault();let r=document.getElementById(`loginEmailMob`),i=document.getElementById(`loginPasswordMob`),a=e.querySelector(`button[type='submit']`),o=String(r.value).replace(/[<>"'`]/g,``).trim(),s=String(i.value).replace(/[<>"'`]/g,``).trim();if(!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(o)){r.classList.add(`is-invalid`),r.focus();return}if(r.classList.remove(`is-invalid`),s.length<6){i.classList.add(`is-invalid`),i.focus();return}i.classList.remove(`is-invalid`);let c=a.textContent;a.disabled=!0,a.innerHTML=`<span class="spinner-border spinner-border-sm me-1" role="status"></span>Verificando...`;try{let e=await n({correo:o,password:s}),t=e.user||e;localStorage.setItem(`sesionActiva`,JSON.stringify({id:t.id,nombre:t.name,apellido:t.lastName,correo:t.email,telefono:t.phone})),window.location.href=`/index.html`}catch(t){a.disabled=!1,a.textContent=c;let n=e.querySelector(`.error-login-navbar`);n||(n=document.createElement(`div`),n.className=`alert alert-danger py-1 small mt-2 error-login-navbar`,e.prepend(n)),n.textContent=t.message||`Correo o contraseña incorrectos.`}}),document.getElementById(`loginEmailMob`)?.addEventListener(`input`,t=>{t.target.classList.remove(`is-invalid`),e.querySelector(`.error-login-navbar`)?.remove()}),document.getElementById(`loginPasswordMob`)?.addEventListener(`input`,e=>{e.target.classList.remove(`is-invalid`)}))}window.verCotizacion=function(e){let t=window._historialActual[e];if(!t)return;let n=document.getElementById(`cuerpoModalVer`);n.innerHTML=`
+    <p><strong>Servicio:</strong> ${t.serviceType}</p>
+    <p><strong>No. de Guía:</strong> ${t.trackingNumber}</p>
+    <p><strong>Fecha:</strong> ${new Date(t.createdAt).toLocaleDateString(`es-MX`)}</p>
+    <p><strong>Estatus:</strong> ${a[t.status]||t.status}</p>
+    <p><strong>Paquete:</strong> ${t.weight} kg | Dimensiones: ${t.length}x${t.width}x${t.height} cm</p>
+    <hr>
+    <p><strong>Origen:</strong> ${t.originAddress}</p>
+    <p><strong>Destino:</strong> ${t.destinationAddress}</p>
+    <hr>
+    <p><strong>Remitente:</strong> ${t.senderName} | Tel. ${t.senderPhone}</p>
+    <p><strong>Destinatario:</strong> ${t.recipientName} | Tel. ${t.recipientPhone}</p>
+    <hr>
+    <p><strong>Descripción del contenido:</strong> ${t.packageDescription}</p>
+  `,new bootstrap.Modal(document.getElementById(`modalVerCotizacion`)).show()},window.copiarFolio=function(e,t){e.preventDefault(),navigator.clipboard.writeText(t).then(()=>{alert(`Guía ${t} copiada al portapapeles.`)}).catch(e=>{console.error(`No se pudo copiar el texto automáticamente: `,e)})}}))();

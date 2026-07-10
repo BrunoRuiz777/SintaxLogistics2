@@ -70,10 +70,6 @@ public class Shipment {
     @Column(nullable = false, length = 15)
     private String senderPhone;
 
-    // descripción de contenido
-    @Column(nullable = false, length = 255)
-    private String contentDescription;
-
     // Enum para saber si está CREADO, EN_RUTA, o ENTREGAO
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -93,6 +89,7 @@ public class Shipment {
     private LocalDateTime actualDeliveryDate;
 
     // se conecta con user
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
